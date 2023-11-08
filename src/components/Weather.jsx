@@ -62,10 +62,34 @@ function fillDay(list){
     const groupByDtTxt = groupBy("dt_txt");
     const days=groupByDtTxt(array_list)
     let keys=Object.keys(days)
+
+
     let median=Math.floor(days[keys[0]].length/2)
-    console.log(median)
-    let d1 =days[keys[0]][median]
+   
+  console.log(days)
+  let d1 =days[keys[0]][median]
     setDay1(d1.main.temp)
+
+
+
+     median=Math.floor(days[keys[1]].length/2)
+   
+     let d2 =days[keys[1]][median]
+
+    setDay2(d2.main.temp)
+
+
+     
+     median=Math.floor(days[keys[2]].length/2)
+   
+    let d3 =days[keys[2]][median]
+    setDay3(d3.main.temp)
+
+
+     median=Math.floor(days[keys[3]].length/2)
+   
+    let d4 =days[keys[3]][median]
+    setDay4(d4.main.temp)
 
     
 }
@@ -104,15 +128,15 @@ function closeWeather(){
                 <p className="weather__temp">+1</p>
             </div>
             <div className="weather__item">
-                <h3 className="weather__title">2</h3>
+            {day2}
                 <p className="weather__temp">+1</p>
             </div>
             <div className="weather__item">
-                <h3 className="weather__title">3</h3>
+            {day3}
                 <p className="weather__temp">+1</p>
             </div>
             <div className="weather__item">
-                <h3 className="weather__title">4</h3>
+            {day4}
                 <p className="weather__temp">+1</p>
             </div>
 
