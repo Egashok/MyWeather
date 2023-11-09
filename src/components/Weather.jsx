@@ -3,6 +3,7 @@ import SelectorCity from "./SelectorCity";
 import axios from 'axios';
 import { CSSTransition } from "react-transition-group";
 import Loader from "./Loader";
+import DayItem from "./DayItem";
 
 
 const Weather = () => {
@@ -23,16 +24,20 @@ const fetchData=async()=>{
     url =await `http://api.openweathermap.org/data/2.5/forecast?q=${city}&lang=ru&units=metric&appid=${apiKey}`;
     const result=await fetch(url)
     const data =await result.json()
-
-  fillDay(data.list)
-    setIsLoading(false)
-
-
-    console.log(data)
-    if(data['cod'] == 404){
+    if(data['cod'] == 404 || data['cod'] == 400 ){
       alert('Неверно указан город')
     setSelectCity(false)
-    }   
+    setIsLoading(false)
+
+    }  
+    else{
+  
+      fillDay(data.list)
+      setIsLoading(false)
+    }
+      
+
+    
 }
 useEffect(()=>{
 
@@ -68,7 +73,7 @@ function fillDay(list){
    
   console.log(days)
   let d1 =days[keys[0]][median]
-    setDay1(d1.main.temp)
+    setDay1(d1)
 
 
 
@@ -76,20 +81,20 @@ function fillDay(list){
    
      let d2 =days[keys[1]][median]
 
-    setDay2(d2.main.temp)
+    setDay2(d2)
 
 
      
      median=Math.floor(days[keys[2]].length/2)
    
     let d3 =days[keys[2]][median]
-    setDay3(d3.main.temp)
+    setDay3(d3)
 
 
      median=Math.floor(days[keys[3]].length/2)
    
     let d4 =days[keys[3]][median]
-    setDay4(d4.main.temp)
+    setDay4(d4)
 
     
 }
@@ -98,16 +103,6 @@ function closeWeather(){
    setSelectCity(false)
    setCity('')
 }
-
-
-/*
-1.Рисунок
-2.Температура 
-3.Влажность
-4.Ветер
-5.Описание
-*/
-
 
     return (
     <div className="weather">
@@ -123,22 +118,10 @@ function closeWeather(){
 
 
         <div className="weather__info">
-            <div className="weather__item">
-               {day1}
-                <p className="weather__temp">+1</p>
-            </div>
-            <div className="weather__item">
-            {day2}
-                <p className="weather__temp">+1</p>
-            </div>
-            <div className="weather__item">
-            {day3}
-                <p className="weather__temp">+1</p>
-            </div>
-            <div className="weather__item">
-            {day4}
-                <p className="weather__temp">+1</p>
-            </div>
+          {day1 && <DayItem day={day1}/>}
+          {day2 && <DayItem day={day2}/>}
+          {day3 && <DayItem day={day3}/>}
+          {day4 && <DayItem day={day4}/>}
 
 
         </div>
